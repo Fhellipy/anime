@@ -1,4 +1,5 @@
 import { Anime, AnimeResponseDTO } from "@app/dto/anime";
+import Image from "next/image";
 import css from "./styles.module.css";
 
 async function Description() {
@@ -6,6 +7,23 @@ async function Description() {
 
   return (
     <>
+      <div className={css.container}>
+        {animes.map((anime) => (
+          <div className={css.wrapper} key={anime.id}>
+            <div className={css.frontCover}>
+              <Image
+                src={anime.images.tiny}
+                alt={anime.title}
+                width={225}
+                height={318}
+              />
+            </div>
+
+            <div className={css.description}></div>
+          </div>
+        ))}
+      </div>
+
       <pre>{JSON.stringify(animes, null, 2)}</pre>
     </>
   );
