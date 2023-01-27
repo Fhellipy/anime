@@ -1,0 +1,9 @@
+.iconError{
+  border: 1.5px solid red;
+  border-radius: 50%;
+  color: white;
+  background: red;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}

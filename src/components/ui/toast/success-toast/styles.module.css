@@ -1,0 +1,14 @@
+.container {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	background: var(--background);
+}
+
+.iconSuccess{
+  color: green;
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+  flex-shrink: 0;
+}

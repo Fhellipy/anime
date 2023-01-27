@@ -1,0 +1,33 @@
+.body {
+  display: grid;
+  max-width: 100%;
+  height: fit-content;
+  grid-template-areas:
+    "header header  "
+    "aside container"
+    "aside container";
+  grid-template-columns: 3rem 1fr;
+  grid-template-rows: 3rem repeat(2, 1fr);
+}
+
+.header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aside {
+  grid-area: aside;
+  display: flex;
+  align-items: center;
+  justify-content:    center;
+  flex-direction: column;
+}
+
+.container {
+  grid-area: container;
+  display: flex        ;
+  align-items: center;
+  justify-content: center;
+}

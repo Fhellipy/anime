@@ -1,0 +1,48 @@
+
+.asideContainer {
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+  top: 3.1rem;
+  left: 0;
+  background-color: var(--surface);
+}
+
+.buttonOpen {
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding:  1rem;
+}
+
+.aside {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.openAside {
+  width: 10rem;
+}
+
+.nav {
+  white-space: nowrap;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.icon {
+  font-size: 1.5rem;
+}

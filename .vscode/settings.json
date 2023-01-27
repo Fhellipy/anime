@@ -1,0 +1,13 @@
+{
+  "typescript.tsdk": "node_modules/.pnpm/typescript@4.9.4/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": true,
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "eslint.validate": ["html", "javascript", "typescript", "typescriptreact"],
+  "cSpell.language": "en,pt-BR,lorem",
+  "editor.tabSize": 2
+}
