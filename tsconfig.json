@@ -23,9 +23,12 @@
     "paths": {
       "@app/*": ["src/app/*"],
       "@components/*": ["src/components/*"],
-			"@pages/*": ["src/pages/*"],
-			"@styles/*": ["src/styles/*"],
 			"@commonTypes/*": ["src/types/*"],
+			"@dto/*": ["src/dto/*"],
+			"@lib/*": ["src/lib/*"],
+			"@pages/*": ["src/pages/*"],
+			"@services/*": ["src/services/*"],
+			"@styles/*": ["src/styles/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
