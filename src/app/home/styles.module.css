@@ -1,0 +1,41 @@
+.main  {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.main h1 {
+  color: var(--primary);
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.wrapper {
+  width: 16rem;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: .7rem;
+  border: 1px var(--secondary) solid;
+  border-radius: 0.5rem;
+  box-shadow: 5px 1px 10px var(--primary);
+}
+
+.titles {
+  margin-top: 0.5rem;
+  text-align: center;
+  white-space: normal;
+  flex-wrap: wrap;
+}
