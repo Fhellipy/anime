@@ -1,18 +1,16 @@
-import Link from "next/link";
-import css from "./styles.module.css";
+import { Inter } from "@next/font/google";
 import { FaUser } from "react-icons/fa";
+import css from "./styles.module.css";
 
-interface HeaderProps {
-  className?: string;
-}
+const inter = Inter({ subsets: ["latin"] });
 
-function Header({ className }: HeaderProps) {
+function Header() {
   return (
-    <div className={`${css.header} ${className}`}>
-      <FaUser className={css.icon}/>
+    <header className={css.header}>
+      <FaUser className={css.icon} />
 
       <p className={css.text}>Fhellipy</p>
-    </div>
+    </header>
   );
 }
 
