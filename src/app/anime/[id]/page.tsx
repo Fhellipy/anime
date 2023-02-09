@@ -1,4 +1,4 @@
-import { Description } from "@components/common/Description";
+import { CardAnime } from "@components/common/CardAnime";
 import { Inter } from "@next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -8,5 +8,5 @@ interface AnimePageProps {
 }
 
 export default async function AnimePage({ params }: AnimePageProps) {
-  return <Description idAnime={params.id} />;
+  return <CardAnime idAnime={params.id} />;
 }
