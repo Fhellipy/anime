@@ -39,7 +39,7 @@ export default function RootLayout({ children }: Props) {
             </div>
           </>
         ) : (
-          <div className={css.content}>{children}</div>
+          <div className={css.contentLogin}>{children}</div>
         )}
       </body>
     </html>
