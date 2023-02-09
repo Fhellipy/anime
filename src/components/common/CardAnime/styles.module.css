@@ -1,10 +1,10 @@
 .container {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 3rem;
+  padding: 3rem 2rem;
   gap: 4rem;
 }
 
@@ -55,6 +55,7 @@
 }
 
 .medias {
+  width: 100%;
   display: flex;
   gap: 2rem;
 
@@ -63,6 +64,10 @@
   }
 }
 
-.medias span h2{
+.synonyms {
+  width: 100%;
+}
+
+.synonyms h2 {
   margin-bottom: 1rem;
 }
