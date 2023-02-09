@@ -1,0 +1,40 @@
+.ul {
+  list-style: none;
+}
+
+.liStyled {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  margin: 1rem 0;
+}
+
+.icon {
+  font-size: 1.7rem;
+  flex-shrink: 0;
+}
+
+#currentPage {
+  color: var(--secondary-light);
+}
+
+
+.link { 
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+  outline: none;
+}
+
+.path {
+  opacity: 100,
+}
+
+
+.hidePath {
+  opacity: 0;
+  display: none;
+}

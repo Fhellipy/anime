@@ -1,0 +1,40 @@
+.sideNav {
+  height: 100%;
+  width: 3.5rem;
+  top: 3rem;
+  background-color: var(--primary-dark);
+  overflow-x: hidden;
+  transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 3px var(--surface) solid;
+  padding: 1rem 0;
+}
+
+.aside  {
+  height: 100%;
+  transition: 0.2s;
+  padding: 1rem;
+  margin-top: 1rem;
+  text-decoration: none;
+  font-size: 1.1rem;
+  color: var(--surface-dark);
+}
+
+.nav {
+  height: 77vh;
+}
+
+.sideNav a:hover {
+  color: var(--secondary-light);
+}
+
+.buttonOpen {
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1rem;
+  outline: none;
+}
