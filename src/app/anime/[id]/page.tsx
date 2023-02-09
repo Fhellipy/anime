@@ -10,5 +10,3 @@ interface AnimePageProps {
 export default async function AnimePage({ params }: AnimePageProps) {
   return <Description idAnime={params.id} />;
 }
-
-export { AnimePage };
