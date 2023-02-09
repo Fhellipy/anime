@@ -1,8 +1,8 @@
+import { Inter } from "@next/font/google";
 import { getTopAnimes } from "@services/animes";
 import Image from "next/image";
 import Link from "next/link";
 import css from "./styles.module.css";
-import { Inter } from "@next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,9 @@ export default async function HomePage() {
   };
 
   return (
-    <main className={css.main}>
+    <main className={css.container}>
       <h1>Top Animes</h1>
-      <div className={css.container}>
+      <div className={css.content}>
         {animes.map((anime) => (
           <Link
             href={`/anime/${anime.id}`}
