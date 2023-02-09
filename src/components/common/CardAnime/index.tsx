@@ -1,13 +1,26 @@
+"use client";
+import { Anime } from "@dto/anime";
 import { getAnime } from "@services/animes";
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 import css from "./styles.module.css";
 
 interface Props {
   idAnime: string;
 }
 
-async function Description({ idAnime }: Props) {
-  const anime = await getAnime(idAnime);
+function CardAnime({ idAnime }: Props) {
+  const [anime, setAnime] = useState<Anime>();
+
+  const getAnimeInformation = useCallback(async () => {
+    const response = await getAnime(idAnime);
+
+    if (response) setAnime(response);
+  }, [idAnime]);
+
+  useEffect(() => {
+    getAnimeInformation();
+  }, [getAnimeInformation]);
 
   if (anime) {
     return (
@@ -31,21 +44,26 @@ async function Description({ idAnime }: Props) {
             <ul className={css.items}>
               <span>
                 <li>
-                  <strong>Favoritado por:</strong> {anime.favorites} pessoas
+                  <strong>Favoritado por:</strong>{" "}
+                  {anime.favorites ? anime.favorites : "--"} pessoas
                 </li>
 
                 <li>
-                  <strong>Duração:</strong> {anime.duration}
+                  <strong>Duração:</strong>{" "}
+                  {anime.duration ? anime.duration : "--"}
                 </li>
                 <li>
-                  <strong>Ano:</strong> {anime.year}
+                  <strong>Ano:</strong> {anime.year ? anime.year : "--"}
                 </li>
                 <li>
-                  <strong>{anime.episodes} </strong> episódio(s)
+                  <strong>{anime.episodes ? anime.episodes : "--"} </strong>{" "}
+                  episódio(s)
                 </li>
               </span>
 
-              <p className={css.synopsis}>{anime.synopsis}</p>
+              <p className={css.synopsis}>
+                {anime.synopsis ? anime.synopsis : "--"}
+              </p>
             </ul>
           </div>
         </div>
@@ -53,7 +71,7 @@ async function Description({ idAnime }: Props) {
         <div className={css.medias}>
           {anime.trailer?.url ? (
             <iframe
-              width="560"
+              width="100%"
               height="315"
               src={anime.trailer.embed_url}
               title="YouTube video player"
@@ -65,8 +83,8 @@ async function Description({ idAnime }: Props) {
             ""
           )}
 
-          <span>
-            <h2>Títulos Relacionados</h2>
+          <span className={css.synonyms}>
+            {anime.title_synonyms?.length ? <h2>Títulos Relacionados</h2> : ""}
 
             {anime.title_synonyms?.map((title, index) => {
               return <p key={index}>{title}</p>;
@@ -76,6 +94,8 @@ async function Description({ idAnime }: Props) {
       </div>
     );
   }
+
+  return <></>;
 }
 
-export { Description };
+export { CardAnime };
