@@ -81,7 +81,7 @@
   /* * CORES PARA SUPERFÍCIE E DE SOBREPOSIÇÃO DE SUPERFÍCIES */
   --surface: hsl(var(--surface-h) var(--surface-s) var(--surface-l));
   /* --surface-light: hsl(var(--surface-h) var(--surface-s) 100%); */
-  --surface-dark: hsl(var(--surface-h) var(--surface-s) 60%);
+  --surface-dark: hsl(var(--surface-h) var(--surface-s) 50%);
 
   /* * CORES PARA SOBREPOSIÇÃO DE SUPERFÍCIES */
   --on-surface: hsl(
