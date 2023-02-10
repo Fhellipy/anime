@@ -14,43 +14,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1rem 0;
 }
 
 .content {
-  width: 20%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   gap: 1rem;
 }
-
-.wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  & > label {
-    color: var(--surface-dark);
-  }
-
-  & > input {
-    min-width: 13rem;
-    width: 50%;
-    height: 1.2rem;
-    font-size: 0.9rem;  
-    padding: 0.5rem;  
-    outline: none;
-    color: var(--surface-dark);
-    border: 1px var(--surface-dark) solid;
-    border-radius: 0.3rem;
-    cursor: pointer;
-  }
-}
-
-
 
 .buttonSignIn {
   width: 5rem;
@@ -62,10 +35,18 @@
   border: 3px var(--primary) solid;
   border-radius: 0.3rem;
   outline: none;
+  cursor: pointer;
 }
 
 .signUp {
   display: flex;
   align-items: center;
   gap: 0.3rem;
+
+  & > a {
+    color: var(--primary);
+    font-weight: bold;
+    text-decoration: underline;
+    font-style: italic;
+  }
 }
