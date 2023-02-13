@@ -1,0 +1,101 @@
+:root {
+  font-family: Inter, sans-serif;
+
+  --header-height: 18.5rem;
+  --shadow-1: 0 0.4rem 0.4rem rgb(0 0 0 / 10%);
+  --shadow-2: 0.1rem 0.2rem 0.5rem hsl(0deg 0% 80%);
+
+  /* * BASE PARA CORES */
+  --primary-h: 189;
+  --primary-s: 100%;
+  --primary-l: 34%;
+  --secondary-h: 189;
+  --secondary-s: 100%;
+  --secondary-l: 44%;
+
+  /* * BASE PARA CORES PARA SUPERFÍCIE E DE SOBREPOSIÇÃO DE SUPERFÍCIES */
+  --surface-h: 0;
+  --surface-s: 0%;
+  --surface-l: 36%;
+
+  /* * BASE PARA CORES PARA BACKGROUND E DE SOBREPOSIÇÃO DE BACKGROUNDS */
+  --background-h: 0;
+  --background-s: 0%;
+  --background-l: 97%;
+
+  /* * BASE PARA CORES PARA ERROR E DE SOBREPOSIÇÃO DE ERRORS */
+  --error-h: 0;
+  --error-s: 90%;
+  --error-l: 45%;
+
+  /* * BASE PARA CORES PARA SUCCESS E DE SOBREPOSIÇÃO DE SUCCESS */
+  --success-h: 115;
+  --success-s: 70%;
+  --success-l: 46%;
+
+  /* * CORES PRIMARIAS E SECUNDÁRIAS */
+
+  /* PRIMÁRIA E VARIANTES */
+  --primary: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
+  --primary-light: hsl(var(--primary-h) var(--primary-s) 32%);
+  --primary-dark: hsl(var(--primary-h) var(--primary-s) 0%);
+
+  /* SECUNDÁRIA E VARIANTES */
+  --secondary: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-l));
+  --secondary-light: hsl(var(--secondary-h) var(--secondary-s) 54%);
+
+  /* * CORES PARA SUPERFÍCIE E DE SOBREPOSIÇÃO DE SUPERFÍCIES */
+  --surface: hsl(var(--surface-h) var(--surface-s) var(--surface-l));
+  /* --surface-light: hsl(var(--surface-h) var(--surface-s) 100%); */
+  --surface-light: hsl(var(--surface-h) var(--surface-s) 50%);
+
+  /* * CORES PARA BACKGROUND E DE SOBREPOSIÇÃO DE BACKGROUNDS */
+  --background: hsl(0deg 0% 100%);
+  --on-background: hsl(0deg 0% 0%);
+
+  /* * CORES PARA INDICAR SUCESSO */
+  --success: hsl(var(--success-h) var(--success-s) var(--success-l));
+  --success-dark: hsl(var(--success-h) 60% 40%);
+
+  /* * CORES PARA INDICAÇÃO DE ERROS */
+  --error: hsl(var(--error-h) var(--error-s) var(--error-l));
+  --error-light: hsl(var(--error-h) 100% 50%);
+  --error-dark: hsl(var(--error-h) 90% 36%);
+
+  /* * COR PARA ELEMENTOS DESABILITADOS */
+  --disabled: hsl(0deg 0% 70%);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+li {
+  list-style: none;
+}
