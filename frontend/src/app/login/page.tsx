@@ -27,7 +27,7 @@ export default function LoginPage() {
       <form className={css.container} onSubmit={handleSubmit(onSubmit)}>
         <div className={css.content}>
           <InputForm
-            error={errors.username?.message}
+            error={errors.email?.message}
             validator={register("email", validateEmail)}
             label="Email"
             placeholder="email@gmail.com"
