@@ -1,0 +1,56 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.buttonSignIn {
+  width: 7rem;
+  height: 3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--primary);
+  color: white;
+  border: 3px var(--primary) solid;
+  border-radius: 0.3rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.signUp {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  & > a {
+    color: var(--primary);
+    font-weight: bold;
+    text-decoration: underline;
+    font-style: italic;
+  }
+
+  @media screen and (max-width: 360px ){
+    flex-direction: column;
+  }
+}
