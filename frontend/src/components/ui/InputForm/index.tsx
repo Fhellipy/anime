@@ -1,82 +1,82 @@
 import {
-  InputHTMLAttributes,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import css from "./styles.module.css";
+  InputHTMLAttributes, useEffect, useState
+} from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import css from './styles.module.css';
 
 interface InputFormProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  validator?: UseFormRegisterReturn;
-  error?: string;
-  confirmPass?: boolean;
+	label?: string;
+	validator?: UseFormRegisterReturn;
+	error?: string;
+	confirmPass?: boolean;
 }
 
 function InputForm(props: InputFormProps) {
-  const { label, error, validator, confirmPass, ...rest } = props;
+	const { label, error, validator, confirmPass, ...rest } = props;
+	const [inputType, setInputType] = useState<string>();
 
-  const [isPassword, setIsPassword] = useState(false);
+	const [isPassword, setIsPassword] = useState(false);
 
-  const input = document.getElementsByTagName("input");
-  const nameInput = confirmPass ? "confirm_password" : "password";
-  const password = input.namedItem(nameInput);
+	const input = document.getElementsByTagName('input');
+	const nameInput = confirmPass ? 'confirm_password' : 'password';
+	const password = input.namedItem(nameInput);
 
-  const showPass = (input: HTMLInputElement) => {
-    if (input) {
-      if (input.type == "password") {
-        input.type = "text";
-      } else {
-        input.type = "password";
-      }
-    }
-  };
+	const showPass = (input: HTMLInputElement) => {
+		if (input) {
+			if (input.type == 'password') {
+				input.type = 'text';
+			} else {
+				input.type = 'password';
+			}
+		}
+	};
 
-  return (
-    <div className={css.content}>
-      <span className={css.wrapper}>
-        <label>{label}: </label>
+	useEffect(() => {
+		setInputType(rest.type);
+	}, [rest.type]);
 
-        <span className={css.input}>
-          <input id="input" {...validator} {...rest} autoComplete="on" />
+	return (
+		<div className={css.content}>
+			<span className={css.wrapper}>
+				<label>{label}: </label>
 
-          {rest.type === "password" ? (
-            <>
-              {isPassword ? (
-                <AiOutlineEyeInvisible
-                  cursor="pointer"
-                  onClick={() => {
-                    if (password) {
-                      showPass(password);
-                      setIsPassword(false);
-                    }
-                  }}
-                />
-              ) : (
-                <AiOutlineEye
-                  cursor="pointer"
-                  onClick={() => {
-                    if (password) {
-                      showPass(password);
-                      setIsPassword(true);
-                    }
-                  }}
-                />
-              )}
-            </>
-          ) : (
-            ""
-          )}
-        </span>
-      </span>
+				<span className={css.input}>
+					<input {...validator} {...rest} autoComplete="on" />
 
-      <p role="alert">{error}</p>
-    </div>
-  );
+					{inputType === 'password' ? (
+						<>
+							{isPassword ? (
+								<AiOutlineEyeInvisible
+									cursor="pointer"
+									onClick={() => {
+										if (password) {
+											showPass(password);
+											setIsPassword(false);
+										}
+									}}
+								/>
+							) : (
+								<AiOutlineEye
+									cursor="pointer"
+									onClick={() => {
+										if (password) {
+											showPass(password);
+											setIsPassword(true);
+										}
+									}}
+								/>
+							)}
+						</>
+					) : (
+						''
+					)}
+				</span>
+			</span>
+
+			<p role="alert">{error}</p>
+		</div>
+	);
 }
 
 export { InputForm };
