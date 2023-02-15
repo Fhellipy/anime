@@ -1,57 +1,88 @@
-"use client";
-import { InputForm } from "@components/ui/InputForm";
-import { User } from "@dto/user";
-import { Inter } from "@next/font/google";
-import { SubmitHandler, useForm } from "react-hook-form";
-import css from "./styles.module.css";
-import { validateEmail } from "./validators/email";
-import { validatePassword } from "./validators/password";
+'use client';
+import { InputForm } from '@components/ui/InputForm';
+import { toast } from '@components/ui/toast';
+import { User } from '@dto/user';
+import { fetchApi } from '@lib/api';
+import { Inter } from '@next/font/google';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import css from './styles.module.css';
+import { validateEmail } from './validators/email';
+import { validatePassword } from './validators/password';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
+
+type UserLogin = {
+	email: string;
+	password: string;
+};
 
 export default function LoginPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<User>();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<User>();
 
-  const onSubmit: SubmitHandler<User> = (data) => {
-    console.log("data", data);
-  };
+	const loginMutate = useMutation<User, Error, UserLogin>(
+		'/auth/signin',
+		async ({ email, password }) => {
+			const response = await fetchApi('/auth/signin', {
+				method: 'POST',
+				body: JSON.stringify({
+					email,
+					password,
+				}),
+			});
 
-  return (
-    <main className={css.main}>
-      <header>Logo</header>
+			return response.json();
+		},
+		{
+			onSuccess() {
+				toast.success('Login feito com sucesso!');
+			},
+			onError(error) {
+				toast.error(error.message);
+			},
+		}
+	);
 
-      <form className={css.container} onSubmit={handleSubmit(onSubmit)}>
-        <div className={css.content}>
-          <InputForm
-            error={errors.email?.message}
-            validator={register("email", validateEmail)}
-            label="Email"
-            placeholder="email@gmail.com"
-            type="email"
-          />
+	const onSubmit: SubmitHandler<User> = ({ email, password }) => {
+		loginMutate.mutate({ email, password });
+	};
 
-          <InputForm
-            error={errors.password?.message}
-            validator={register("password", validatePassword)}
-            placeholder="*********"
-            label="Senha"
-            type="password"
-          />
-        </div>
+	return (
+		<main className={css.main}>
+			<header>Logo</header>
 
-        <button type="submit" className={css.buttonSignIn}>
-          Login
-        </button>
-      </form>
+			<form className={css.container} onSubmit={handleSubmit(onSubmit)}>
+				<div className={css.content}>
+					<InputForm
+						error={errors.email?.message}
+						validator={register('email', validateEmail)}
+						label="Email"
+						placeholder="email@gmail.com"
+						type="email"
+					/>
 
-      <span className={css.signUp}>
-        <p>Ainda não tem uma conta?</p>
-        <a href="/register-user">Cadastrar-se</a>
-      </span>
-    </main>
-  );
+					<InputForm
+						error={errors.password?.message}
+						validator={register('password', validatePassword)}
+						placeholder="*********"
+						label="Senha"
+						type="password"
+					/>
+				</div>
+
+				<button type="submit" className={css.buttonSignIn}>
+					Login
+				</button>
+			</form>
+
+			<span className={css.signUp}>
+				<p>Ainda não tem uma conta?</p>
+				<a href="/register-user">Cadastrar-se</a>
+			</span>
+		</main>
+	);
 }
