@@ -1,7 +1,7 @@
 import { Anime, AnimeResponseDTO } from "@dto/anime";
 import { logError } from "@lib/log";
 
-const API_URL = process.env.NEXT_PUBLIC_API;
+const API_URL = process.env.NEXT_PUBLIC_API_ANIME;
 
 function isAnimeResponseDTO(data: unknown): data is { data: AnimeResponseDTO } {
   if (!data) return false;
