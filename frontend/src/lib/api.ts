@@ -1,5 +1,5 @@
 import { API_URL, TOKEN_KEY } from '@config/env/api';
-
+import "cross-fetch/polyfill";
 class ApiError extends Error {
 	code: number;
 	constructor(
@@ -35,4 +35,4 @@ async function fetchApi(
 	}
 }
 
-export { fetchApi };
+export { fetchApi, ApiError };
