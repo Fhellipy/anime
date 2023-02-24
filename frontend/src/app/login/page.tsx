@@ -1,21 +1,14 @@
-'use client';
-import { InputForm } from '@components/ui/InputForm';
-import { toast } from '@components/ui/toast';
-import { User } from '@dto/user';
-import { fetchApi } from '@lib/api';
-import { Inter } from '@next/font/google';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import css from './styles.module.css';
-import { validateEmail } from './validators/email';
-import { validatePassword } from './validators/password';
+"use client";
+import { InputForm } from "@components/ui/InputForm";
+import { User } from "@dto/user";
+import { Inter } from "@next/font/google";
+import { useMutateUserLogin } from "@services/user";
+import { SubmitHandler, useForm } from "react-hook-form";
+import css from "./styles.module.css";
+import { validateEmail } from "./validators/email";
+import { validatePassword } from "./validators/password";
 
-const inter = Inter({ subsets: ['latin'] });
-
-type UserLogin = {
-	email: string;
-	password: string;
-};
+const inter = Inter({ subsets: ["latin"] });
 
 export default function LoginPage() {
 	const {
@@ -24,31 +17,7 @@ export default function LoginPage() {
 		formState: { errors },
 	} = useForm<User>();
 
-	const loginMutate = useMutation<User, Error, UserLogin>(
-		'/auth/signin',
-		async ({ email, password }) => {
-			const response = await fetchApi('/auth/signin', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email,
-					password,
-				}),
-			});
-
-			return response.json();
-		},
-		{
-			onSuccess() {
-				toast.success('Login feito com sucesso!');
-			},
-			onError(error) {
-				toast.error(error.message);
-			},
-		}
-	);
+	const loginMutate = useMutateUserLogin();
 
 	const onSubmit: SubmitHandler<User> = ({ email, password }) => {
 		loginMutate.mutate({ email, password });
@@ -62,7 +31,7 @@ export default function LoginPage() {
 				<div className={css.content}>
 					<InputForm
 						error={errors.email?.message}
-						validator={register('email', validateEmail)}
+						validator={register("email", validateEmail)}
 						label="Email"
 						placeholder="email@gmail.com"
 						type="email"
@@ -70,7 +39,7 @@ export default function LoginPage() {
 
 					<InputForm
 						error={errors.password?.message}
-						validator={register('password', validatePassword)}
+						validator={register("password", validatePassword)}
 						placeholder="*********"
 						label="Senha"
 						type="password"
