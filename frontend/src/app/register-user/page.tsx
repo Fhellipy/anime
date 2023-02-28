@@ -4,87 +4,96 @@ import { validateEmail } from "@app/login/validators/email";
 import { validatePassword } from "@app/login/validators/password";
 import { validateUsername } from "@app/login/validators/username";
 import { InputForm } from "@components/ui/InputForm";
+import { TOKEN_KEY } from "@config/env/api";
 import { User } from "@dto/user";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 import { Inter } from "@next/font/google";
+import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import css from "./styles.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RegisterUserPage() {
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<User>();
+	const [token] = useLocalStorage(TOKEN_KEY, "");
 
-  const onSubmit: SubmitHandler<User> = (data) => {
-    if (data.password !== data.confirm_password) {
-      setError("password", {
-        type: "custom",
-        message: "Senha e confirmar senha não correspondem!",
-      });
-      setError("confirm_password", {
-        type: "custom",
-        message: "Senha e confirmar senha não correspondem!",
-      });
+	if (token) {
+		redirect("/home");
+	}
 
-      return;
-    }
+	const {
+		register,
+		handleSubmit,
+		setError,
+		formState: { errors },
+	} = useForm<User>();
 
-    console.log("data", data);
-  };
+	const onSubmit: SubmitHandler<User> = (data) => {
+		if (data.password !== data.confirm_password) {
+			setError("password", {
+				type: "custom",
+				message: "Senha e confirmar senha não correspondem!",
+			});
+			setError("confirm_password", {
+				type: "custom",
+				message: "Senha e confirmar senha não correspondem!",
+			});
 
-  return (
-    <main className={css.main}>
-      <header>Logo</header>
+			return;
+		}
 
-      <form className={css.container} onSubmit={handleSubmit(onSubmit)}>
-        <div className={css.content}>
-          <InputForm
-            error={errors.username?.message}
-            validator={register("username", validateUsername)}
-            label="Usuário"
-            placeholder="Digite o usuário..."
-            type="text"
-          />
+		console.log("data", data);
+	};
 
-          <InputForm
-            error={errors.email?.message}
-            validator={register("email", validateEmail)}
-            label="Email"
-            placeholder="email@gmail.com"
-            type="email"
-          />
+	return (
+		<main className={css.main}>
+			<header>Logo</header>
 
-          <InputForm
-            error={errors.password?.message}
-            validator={register("password", validatePassword)}
-            placeholder="*********"
-            label="Senha"
-            type="password"
-          />
+			<form className={css.container} onSubmit={handleSubmit(onSubmit)}>
+				<div className={css.content}>
+					<InputForm
+						error={errors.username?.message}
+						validator={register("username", validateUsername)}
+						label="Usuário"
+						placeholder="Digite o usuário..."
+						type="text"
+					/>
 
-          <InputForm
-            error={errors.confirm_password?.message}
-            validator={register("confirm_password", validateConfirmPassword)}
-            placeholder="*********"
-            label="Senha"
-            type="password"
-            confirmPass
-          />
-        </div>
+					<InputForm
+						error={errors.email?.message}
+						validator={register("email", validateEmail)}
+						label="Email"
+						placeholder="email@gmail.com"
+						type="email"
+					/>
 
-        <button type="submit" className={css.buttonSignIn}>
-          Cadastrar
-        </button>
-      </form>
+					<InputForm
+						error={errors.password?.message}
+						validator={register("password", validatePassword)}
+						placeholder="*********"
+						label="Senha"
+						type="password"
+					/>
 
-      <span className={css.signUp}>
-        <p>Já tem uma conta?</p>
-        <a href="/login">Faça login</a>
-      </span>
-    </main>
-  );
+					<InputForm
+						error={errors.confirm_password?.message}
+						validator={register("confirm_password", validateConfirmPassword)}
+						placeholder="*********"
+						label="Senha"
+						type="password"
+						confirmPass
+					/>
+				</div>
+
+				<button type="submit" className={css.buttonSignIn}>
+					Cadastrar
+				</button>
+			</form>
+
+			<span className={css.signUp}>
+				<p>Já tem uma conta?</p>
+				<a href="/login">Faça login</a>
+			</span>
+		</main>
+	);
 }

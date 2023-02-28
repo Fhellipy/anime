@@ -1,8 +1,11 @@
 "use client";
 import { InputForm } from "@components/ui/InputForm";
+import { TOKEN_KEY } from "@config/env/api";
 import { User } from "@dto/user";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 import { Inter } from "@next/font/google";
 import { useMutateUserLogin } from "@services/user";
+import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import css from "./styles.module.css";
 import { validateEmail } from "./validators/email";
@@ -11,6 +14,12 @@ import { validatePassword } from "./validators/password";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function LoginPage() {
+	const [token] = useLocalStorage(TOKEN_KEY, "");
+
+	if (token) {
+		redirect("/home");
+	}
+
 	const {
 		register,
 		handleSubmit,
