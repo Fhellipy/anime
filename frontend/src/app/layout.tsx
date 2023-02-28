@@ -1,13 +1,11 @@
 "use client";
 import { Header } from "@components/templates/Header";
 import SideBar from "@components/templates/SideBar";
-import { TOKEN_KEY } from "@config/env/api";
 import { queryClient } from "@config/queryClient";
+import UserProvider from "@context/user";
 import { Inter } from "@next/font/google";
-import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "react-query";
-import { useLocalStorage } from "src/hooks/useLocalStorage";
 import "../styles/globals.css";
 import css from "./styles.module.css";
 
@@ -18,13 +16,16 @@ interface Props {
 }
 
 export default function RootLayout({ children }: Props) {
-	const [token, _] = useLocalStorage(TOKEN_KEY, "");
+	const token = localStorage.getItem("token");
 
 	const html = (
-		<SessionProvider>
-			<QueryClientProvider client={queryClient}>
+		<QueryClientProvider client={queryClient}>
+			<UserProvider>
 				<Toaster />
-				{token ? (
+
+				{!token ? (
+					<div className={css.contentLogin}>{children}</div>
+				) : (
 					<>
 						<Header />
 
@@ -33,11 +34,9 @@ export default function RootLayout({ children }: Props) {
 							<div className={css.content}>{children}</div>
 						</div>
 					</>
-				) : (
-					<div className={css.contentLogin}>{children}</div>
 				)}
-			</QueryClientProvider>
-		</SessionProvider>
+			</UserProvider>
+		</QueryClientProvider>
 	);
 
 	return (
