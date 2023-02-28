@@ -1,5 +1,6 @@
-import { API_URL, TOKEN_KEY } from '@config/env/api';
+import { API_URL, TOKEN_KEY } from "@config/env/api";
 import "cross-fetch/polyfill";
+
 class ApiError extends Error {
 	code: number;
 	constructor(
@@ -14,14 +15,23 @@ class ApiError extends Error {
 
 async function fetchApi(
 	input: string,
-	init?: RequestInit | undefined
+	init?: RequestInit | undefined,
+	defaultToken: string | undefined = undefined
 ): Promise<Response> {
-	const token = localStorage.getItem(TOKEN_KEY);
+	const getToken = () => {
+		if (defaultToken) return defaultToken;
+
+		if (typeof window !== "undefined")
+			return window.localStorage.getItem(TOKEN_KEY);
+		return undefined;
+	};
+
+	const token = getToken();
 
 	const response = await fetch(API_URL + input, {
 		...init,
 		headers: {
-			Authorization: token ? `Bearer ${token}` : '',
+			Authorization: `Bearer ${token}`,
 			...init?.headers,
 		},
 	});
