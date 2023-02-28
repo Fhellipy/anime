@@ -8,7 +8,7 @@ const Users = Router();
 
 // Users.get("/", () => {});
 
-Users.post("/", async (req: Request, resp: Response) => {
+Users.post("/register", async (req: Request, resp: Response) => {
 	const { username, email, password } = req.body as UserType;
 
 	const userExists = await prisma.user.findUnique({ where: { email } });
