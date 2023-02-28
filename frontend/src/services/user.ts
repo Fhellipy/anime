@@ -1,8 +1,10 @@
 "use client";
 import { toast } from "@components/ui/toast";
+import { TOKEN_KEY } from "@config/env/api";
+import { useUserContext } from "@context/user";
 import { UserLogged } from "@dto/user";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 import { ApiError, fetchApi } from "@lib/api";
-import { useRouter } from "next/navigation";
 import { useMutation } from "react-query";
 
 type UserLogin = {
@@ -11,15 +13,22 @@ type UserLogin = {
 };
 
 function useMutateUserLogin() {
-	const router = useRouter();
+	const [, setUser] = useUserContext();
+	const [, setToken] = useLocalStorage(TOKEN_KEY, "");
 
-	const cookieMutation = useMutation(async () => {
-		const response = await fetch("/api", {
-			method: "POST",
-		});
+	const cookieMutation = useMutation<string, Error, string>(
+		"/api",
+		async (token) => {
+			const response = await fetch("/api", {
+				method: "POST",
+				body: JSON.stringify({
+					token: token,
+				}),
+			});
 
-		return response.json();
-	});
+			return response.json();
+		}
+	);
 
 	return useMutation<UserLogged, ApiError | Error, UserLogin>(
 		"/auth/signin",
@@ -39,12 +48,17 @@ function useMutateUserLogin() {
 		},
 		{
 			onSuccess: (data) => {
-				cookieMutation.mutate();
+				setUser(data.user);
+
+				const { token } = data;
+
+				cookieMutation.mutate(token);
+				setToken(token);
 
 				toast.success("Login feito com sucesso!");
 
 				setTimeout(() => {
-					router.push("/home");
+					window.location.pathname = "/home";
 				}, 500);
 			},
 			onError(error) {
