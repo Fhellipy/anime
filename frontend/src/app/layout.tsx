@@ -1,9 +1,13 @@
 "use client";
 import { Header } from "@components/templates/Header";
 import SideBar from "@components/templates/SideBar";
+import { TOKEN_KEY } from "@config/env/api";
 import { queryClient } from "@config/queryClient";
 import UserProvider from "@context/user";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 import { Inter } from "@next/font/google";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "react-query";
 import "../styles/globals.css";
@@ -16,14 +20,24 @@ interface Props {
 }
 
 export default function RootLayout({ children }: Props) {
-	const token = localStorage.getItem("token");
+	const [token] = useLocalStorage(TOKEN_KEY, "");
+
+	const [isLogged, setIsLogged] = useState(false);
+
+	useEffect(() => {
+		if (typeof token === "string") {
+			setIsLogged(true);
+		} else {
+			setIsLogged(false);
+		}
+	}, [token]);
 
 	const html = (
 		<QueryClientProvider client={queryClient}>
 			<UserProvider>
 				<Toaster />
 
-				{!token ? (
+				{!isLogged ? (
 					<div className={css.contentLogin}>{children}</div>
 				) : (
 					<>
