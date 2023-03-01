@@ -2,7 +2,7 @@
 import { toast } from "@components/ui/toast";
 import { TOKEN_KEY } from "@config/env/api";
 import { useUserContext } from "@context/user";
-import { UserLogged } from "@dto/user";
+import { User, UserLogged } from "@dto/user";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { ApiError, fetchApi } from "@lib/api";
 import { useMutation } from "react-query";
@@ -13,7 +13,7 @@ type UserLogin = {
 };
 
 function useMutateUserLogin() {
-	const [, setUser] = useUserContext();
+	const { signIn } = useUserContext();
 	const [, setToken] = useLocalStorage(TOKEN_KEY, "");
 
 	const cookieMutation = useMutation<string, Error, string>(
@@ -48,7 +48,7 @@ function useMutateUserLogin() {
 		},
 		{
 			onSuccess: (data) => {
-				setUser(data.user);
+				signIn(data.user);
 
 				const { token } = data;
 
@@ -70,4 +70,31 @@ function useMutateUserLogin() {
 	);
 }
 
-export { useMutateUserLogin };
+function useMutateUserRegister() {
+	return useMutation<User, ApiError | Error, Partial<User>>(
+		"/users/register",
+		async (user) => {
+			const response = await fetchApi("/users/register", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(user),
+			});
+
+			return response.json();
+		},
+		{
+			onSuccess: () => {
+				toast.success("Usuário cadastrado com sucesso! Efetue o login");
+			},
+			onError(error) {
+				setTimeout(() => {
+					toast.error(error.message);
+				}, 500);
+			},
+		}
+	);
+}
+
+export { useMutateUserLogin, useMutateUserRegister };
