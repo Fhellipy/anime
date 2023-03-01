@@ -49,5 +49,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/home", "/configuration", "/anime"],
+	matcher: ["/home", "/configuration", "/anime/:path*"],
 };
