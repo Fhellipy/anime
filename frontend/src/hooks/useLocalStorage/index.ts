@@ -1,17 +1,28 @@
 "use client";
 import { useState } from "react";
 
-function useLocalStorage(key: string, initialValue: string) {
+function useLocalStorage<T>(key: string, initialValue: string) {
+	const parseValue = (storedValue: string) => {
+		if (typeof window === "undefined") return {};
+		if (typeof storedValue !== "string") return {};
+		try {
+			return JSON.parse(storedValue);
+		} catch (error) {
+			return {};
+		}
+	};
+
 	const [storedValue, setStoredValue] = useState(() => {
 		if (typeof window === "undefined") {
-			return initialValue;
+			return parseValue(initialValue);
 		}
+
 		try {
 			const item = window.localStorage.getItem(key);
 
-			return item ? JSON.parse(item) : initialValue;
+			return parseValue(typeof item === "string" ? item : initialValue);
 		} catch (error) {
-			return initialValue;
+			return parseValue(initialValue);
 		}
 	});
 
@@ -29,7 +40,11 @@ function useLocalStorage(key: string, initialValue: string) {
 		}
 	};
 
-	return [storedValue, setValue];
+	const value = Object.keys(parseValue(storedValue)).length
+		? parseValue(storedValue)
+		: storedValue;
+
+	return [value, setValue];
 }
 
 export { useLocalStorage };
