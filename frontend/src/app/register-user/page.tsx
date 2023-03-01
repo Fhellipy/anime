@@ -1,14 +1,16 @@
 "use client";
-import { validateConfirmPassword } from "@app/login/validators/confirmPassword";
-import { validateEmail } from "@app/login/validators/email";
-import { validatePassword } from "@app/login/validators/password";
-import { validateUsername } from "@app/login/validators/username";
 import { InputForm } from "@components/ui/InputForm";
 import { TOKEN_KEY } from "@config/env/api";
 import { User } from "@dto/user";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { Inter } from "@next/font/google";
+import { useMutateUserRegister } from "@services/user";
+import { validateConfirmPassword } from "@utils/validators/confirmPassword";
+import { validateEmail } from "@utils/validators/email";
+import { validatePassword } from "@utils/validators/password";
+import { validateUsername } from "@utils/validators/username";
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import css from "./styles.module.css";
 
@@ -17,7 +19,9 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RegisterUserPage() {
 	const [token] = useLocalStorage(TOKEN_KEY, "");
 
-	if (token) {
+	const registerMutate = useMutateUserRegister();
+
+	if (Object.keys(token).length) {
 		redirect("/home");
 	}
 
@@ -25,6 +29,7 @@ export default function RegisterUserPage() {
 		register,
 		handleSubmit,
 		setError,
+		reset,
 		formState: { errors },
 	} = useForm<User>();
 
@@ -42,8 +47,14 @@ export default function RegisterUserPage() {
 			return;
 		}
 
-		console.log("data", data);
+		const { confirm_password: _, ...user } = data;
+
+		registerMutate.mutate(user);
 	};
+
+	useEffect(() => {
+		if (registerMutate.isSuccess) reset();
+	}, [registerMutate.isSuccess]);
 
 	return (
 		<main className={css.main}>
@@ -79,7 +90,7 @@ export default function RegisterUserPage() {
 						error={errors.confirm_password?.message}
 						validator={register("confirm_password", validateConfirmPassword)}
 						placeholder="*********"
-						label="Senha"
+						label="Confirmar senha"
 						type="password"
 						confirmPass
 					/>
