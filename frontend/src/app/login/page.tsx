@@ -5,18 +5,17 @@ import { User } from "@dto/user";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { Inter } from "@next/font/google";
 import { useMutateUserLogin } from "@services/user";
+import { validateEmail } from "@utils/validators/email";
+import { validatePassword } from "@utils/validators/password";
 import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import css from "./styles.module.css";
-import { validateEmail } from "./validators/email";
-import { validatePassword } from "./validators/password";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export default function LoginPage() {
 	const [token] = useLocalStorage(TOKEN_KEY, "");
 
-	if (token) {
+	if (Object.keys(token).length) {
 		redirect("/home");
 	}
 
