@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-right: 3px var(--surface) solid;
+  border-right: 3px var(--primary) solid;
   padding: 1rem 0;
 }
 
