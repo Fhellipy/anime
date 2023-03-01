@@ -14,6 +14,10 @@
 .icon {
   font-size: 1.7rem;
   flex-shrink: 0;
+
+  @media screen and (max-width: 350px){
+    font-size: 1.3rem;
+  }
 }
 
 #currentPage {
@@ -30,7 +34,11 @@
 }
 
 .path {
-  opacity: 100,
+  opacity: 100;
+
+  @media screen and (max-width: 350px){
+    font-size: .8rem;
+  }
 }
 
 

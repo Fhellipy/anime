@@ -9,9 +9,14 @@
 }
 
 .icon {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   flex-shrink: 0;
+
+  @media screen and (max-width: 350px){
+    font-size: 1rem;
+  }
 }
+
 
 #currentPage {
   color: var(--secondary-light);
@@ -21,12 +26,17 @@
 .link { 
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.2rem;
   width: 100%;
 }
 
 .path {
-  opacity: 100,
+  opacity: 100;
+
+  @media screen and (max-width: 350px){
+    font-size: .8rem;
+  }
 }
 
 .hidePath {
