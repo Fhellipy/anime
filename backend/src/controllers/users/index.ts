@@ -1,5 +1,6 @@
 import prisma from "@database";
-import { User as UserType } from "@dto/user";
+import { Password, User as UserType } from "@dto/user";
+import { authMiddleware } from "@middlewares/authMiddleware";
 import { BadRequestError } from "@utils/apiError";
 import bcrypt from "bcrypt";
 import { Request, Response, Router } from "express";
@@ -35,5 +36,43 @@ Users.post("/register", async (req: Request, resp: Response) => {
 		user,
 	});
 });
+
+Users.get(
+	"/redefine-password",
+	authMiddleware,
+	async (req: Request, resp: Response) => {
+		const { current_password, password } = req.body as Password;
+
+		const id = req.user.id;
+		const user = await prisma.user.findUnique({ where: { id } });
+
+		if (!user) {
+			throw new BadRequestError("Senha atual inválida!");
+		}
+
+		const verifyPassword = await bcrypt.compare(
+			current_password,
+			user.password
+		);
+
+		if (!verifyPassword) {
+			throw new BadRequestError("Senha atual inválida!");
+		}
+
+		const hashPassword = await bcrypt.hash(password, 10);
+
+		await prisma.user.update({
+			where: { id: id },
+			data: {
+				password: hashPassword,
+			},
+		});
+
+		return resp.status(201).send({
+			success: true,
+			message: "Senha atualizada com sucesso!",
+		});
+	}
+);
 
 export default Users;
