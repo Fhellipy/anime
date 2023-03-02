@@ -12,6 +12,11 @@ type UserLogin = {
 	password: string;
 };
 
+type Password = {
+	current_password: string;
+	password: string;
+};
+
 function useMutateUserLogin() {
 	const { signIn } = useUserContext();
 	const [, setToken] = useLocalStorage(TOKEN_KEY, "");
@@ -35,9 +40,6 @@ function useMutateUserLogin() {
 		async ({ email, password }) => {
 			const response = await fetchApi("/auth/signin", {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
 				body: JSON.stringify({
 					email,
 					password,
@@ -76,9 +78,6 @@ function useMutateUserRegister() {
 		async (user) => {
 			const response = await fetchApi("/users/register", {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
 				body: JSON.stringify(user),
 			});
 
@@ -97,4 +96,28 @@ function useMutateUserRegister() {
 	);
 }
 
-export { useMutateUserLogin, useMutateUserRegister };
+function useMutateRedefinePassword() {
+	return useMutation<Password, ApiError | Error, Password>(
+		"/users/redefine-password",
+		async (pass) => {
+			const response = await fetchApi("/users/redefine-password", {
+				method: "POST",
+				body: JSON.stringify(pass),
+			});
+
+			return response.json();
+		},
+		{
+			onSuccess: () => {
+				toast.success("Senha atualizada com sucesso!");
+			},
+			onError(error) {
+				setTimeout(() => {
+					toast.error(error.message);
+				}, 500);
+			},
+		}
+	);
+}
+
+export { useMutateUserLogin, useMutateUserRegister, useMutateRedefinePassword };

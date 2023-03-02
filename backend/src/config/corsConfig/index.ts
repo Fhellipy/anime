@@ -1,4 +1,3 @@
-import { CORS_ORIGINS } from "@config/env";
 import { CorsOptions } from "cors";
 
 const corsConfig: CorsOptions = {

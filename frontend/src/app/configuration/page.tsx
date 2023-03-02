@@ -1,9 +1,13 @@
 "use client";
 import { InputForm } from "@components/ui/InputForm";
+import { useUserContext } from "@context/user";
 import { Inter } from "@next/font/google";
+import { useMutateRedefinePassword } from "@services/user";
 import { validateConfirmPassword } from "@utils/validators/confirmPassword";
 import { validateCurrentPassword } from "@utils/validators/currentPassword";
 import { validatePassword } from "@utils/validators/password";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import css from "./styles.module.css";
 
@@ -16,6 +20,9 @@ type TypePassword = {
 };
 
 export default function Configuration() {
+	const { signOut } = useUserContext();
+	const passwordMutate = useMutateRedefinePassword();
+
 	const {
 		register,
 		handleSubmit,
@@ -38,11 +45,25 @@ export default function Configuration() {
 			return;
 		}
 
-		console.log("data", data);
+		const { confirm_password, ...pass } = data;
 
-
-		// registerMutate.mutate(user);
+		passwordMutate.mutate(pass);
 	};
+
+	useEffect(() => {
+		if (passwordMutate.isSuccess) {
+			const logout = () => {
+				Cookies.remove("token");
+				localStorage.removeItem("token");
+				window.location.pathname = "/login";
+
+				signOut();
+			};
+
+			logout();
+			reset();
+		}
+	}, [passwordMutate.isSuccess]);
 
 	return (
 		<main className={css.main}>

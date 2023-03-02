@@ -14,9 +14,7 @@ export const POST = async (request: Request) => {
 		);
 	}
 
-	const authCookie = `token=${json.token};Path=/;Max-Age=${
-		3600 * 1000 * 8
-	}`;
+	const authCookie = `token=${json.token};Path=/;Max-Age=${360 * 10}`;
 
 	return new Response(response, {
 		headers: {

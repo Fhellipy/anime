@@ -7,8 +7,6 @@ import { Request, Response, Router } from "express";
 
 const Users = Router();
 
-// Users.get("/", () => {});
-
 Users.post("/register", async (req: Request, resp: Response) => {
 	const { username, email, password } = req.body as UserType;
 
@@ -37,7 +35,7 @@ Users.post("/register", async (req: Request, resp: Response) => {
 	});
 });
 
-Users.get(
+Users.post(
 	"/redefine-password",
 	authMiddleware,
 	async (req: Request, resp: Response) => {

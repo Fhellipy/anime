@@ -1,0 +1,39 @@
+.comments {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--primary-dark);
+  border-radius: .5rem;
+}
+
+.newComment {
+  display: flex;
+  flex-direction: column;
+  
+  & > textarea {
+    height: 5rem;
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: .5rem;
+    margin: .3rem 0 1rem 0;
+    border: 1px solid var(--primary);
+    border-radius: .5rem;
+    outline: 0;
+  }
+}
+
+.existingComments {
+
+}
+
+.author {
+  display: flex;
+  gap: 0.5rem;
+  font-style: italic;
+
+
+  
+}
+
+.comment {
+
+}

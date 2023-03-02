@@ -26,12 +26,13 @@ async function fetchApi(
 		return undefined;
 	};
 
-	const token = getToken();
+	const token = getToken()?.replaceAll('"', "");
 
 	const response = await fetch(API_URL + input, {
 		...init,
 		headers: {
 			Authorization: `Bearer ${token}`,
+			"Content-Type": "application/json",
 			...init?.headers,
 		},
 	});
