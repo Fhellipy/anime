@@ -34,6 +34,8 @@ function InputForm(props: InputFormProps) {
 			} else {
 				input.type = "password";
 			}
+
+			input.focus();
 		}
 	};
 
