@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url = env("DATABASE_URL")
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -15,4 +15,15 @@ model User {
   password String
 
   @@map("users")
+}
+
+model AnimeComments {
+  id        String   @id @default(uuid()) @map("_id")
+  idAnime   String
+  comment   String
+  userId    String?  @map("user_id")
+  username  String?  @map("username")
+  createdAt DateTime
+
+  @@map("anime_comments")
 }
