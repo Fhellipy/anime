@@ -93,7 +93,7 @@ function CardAnime({ idAnime }: Props) {
 					</span>
 				</div>
 
-				<CommentsAnime idAnime="" />
+				<CommentsAnime idAnime={idAnime} />
 			</div>
 		);
 	}
