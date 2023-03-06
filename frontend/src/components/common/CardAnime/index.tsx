@@ -3,7 +3,7 @@ import { Anime } from "@dto/anime";
 import { getAnime } from "@services/animes";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { CommentsAnime } from "../Comments";
+import { NewComment } from "../NewComment";
 import css from "./styles.module.css";
 
 interface Props {
@@ -93,7 +93,7 @@ function CardAnime({ idAnime }: Props) {
 					</span>
 				</div>
 
-				<CommentsAnime idAnime={idAnime} />
+				<NewComment idAnime={idAnime} />
 			</div>
 		);
 	}
