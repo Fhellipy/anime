@@ -10,6 +10,7 @@ import { validatePassword } from "@utils/validators/password";
 import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import css from "./styles.module.css";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function LoginPage() {
