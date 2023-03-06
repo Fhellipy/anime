@@ -37,12 +37,26 @@ Anime.get("/", authMiddleware, async (req: Request, resp: Response) => {
 	if (typeof idAnime === "string") {
 		const comments = await prisma.animeComments.findMany({
 			where: { idAnime },
+			orderBy: { createdAt: "desc" },
 		});
 
 		return resp.status(200).send({
 			comments,
 		});
 	}
+});
+
+Anime.delete("/", authMiddleware, async (req: Request, resp: Response) => {
+	const { id } = req.body;
+
+	await prisma.animeComments.delete({
+		where: { id },
+	});
+
+	return resp.status(200).send({
+		success: true,
+		message: "Comentário deletado com sucesso!",
+	});
 });
 
 export default Anime;
