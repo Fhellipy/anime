@@ -20,7 +20,6 @@ Anime.post("/new", authMiddleware, async (req: Request, resp: Response) => {
 			idAnime,
 			comment,
 			userId: user.id,
-			createdAt: new Date(),
 			username: user.username,
 		},
 	});
