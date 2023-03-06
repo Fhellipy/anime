@@ -23,7 +23,7 @@ model AnimeComments {
   comment   String
   userId    String?  @map("user_id")
   username  String?  @map("username")
-  createdAt DateTime
+  createdAt DateTime @default(now())
 
   @@map("anime_comments")
 }
