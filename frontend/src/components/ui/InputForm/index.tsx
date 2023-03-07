@@ -14,18 +14,27 @@ interface InputFormProps extends InputHTMLAttributes<HTMLInputElement> {
 function InputForm(props: InputFormProps) {
 	const { label, error, validator, confirmPass, currentPass, ...rest } = props;
 	const [inputType, setInputType] = useState<string>();
+	const [password, setPassword] = useState<HTMLInputElement | null>(null);
 
 	const [isPassword, setIsPassword] = useState(false);
 
-	const input = document.getElementsByTagName("input");
+	useEffect(() => {
+		if (typeof document !== "undefined") {
+			const input = document.getElementsByTagName("input");
 
-	const nameInput = currentPass
-		? "current_password"
-		: confirmPass
-		? "confirm_password"
-		: "password";
+			const nameInput = currentPass
+				? "current_password"
+				: confirmPass
+				? "confirm_password"
+				: "password";
 
-	const password = input.namedItem(nameInput);
+			const pass = input.namedItem(nameInput);
+
+			setPassword(pass);
+		}
+	}, []);
+
+	console.log("password", password);
 
 	const showPass = (input: HTMLInputElement) => {
 		if (input) {
