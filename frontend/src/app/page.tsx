@@ -1,4 +1,4 @@
-import LoginPage from "./login/page";
+import LoginPage from "./(auth)/login/page";
 
 export default async function PageLayout() {
   return <LoginPage />;
