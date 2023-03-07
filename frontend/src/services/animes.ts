@@ -1,6 +1,4 @@
-import {
-  Anime, AnimeResponseDTO
-} from "@dto/anime";
+import { Anime, AnimeResponseDTO } from "@dto/anime";
 import { logError } from "@lib/log";
 
 const API_URL = process.env.NEXT_PUBLIC_API_ANIME;
@@ -52,7 +50,11 @@ function animeDefault(anime: AnimeResponseDTO): Anime {
 
 export async function getTopAnimes(): Promise<Anime[]> {
 	try {
-		const response = await fetch(`${API_URL}/top/anime/`);
+		const response = await fetch(`${API_URL}/top/anime/`, {
+			next: {
+				revalidate: 30,
+			},
+		});
 
 		const json = await response.json();
 
@@ -69,7 +71,11 @@ export async function getAnime(id: string) {
 	try {
 		const malID = id.replace(/\D/g, "");
 
-		const response = await fetch(`${API_URL}/anime/${malID}`);
+		const response = await fetch(`${API_URL}/anime/${malID}`, {
+			next: {
+				revalidate: 30,
+			},
+		});
 
 		const json = await response.json();
 
