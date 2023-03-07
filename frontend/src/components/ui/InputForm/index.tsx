@@ -34,8 +34,6 @@ function InputForm(props: InputFormProps) {
 		}
 	}, []);
 
-	console.log("password", password);
-
 	const showPass = (input: HTMLInputElement) => {
 		if (input) {
 			if (input.type == "password") {
